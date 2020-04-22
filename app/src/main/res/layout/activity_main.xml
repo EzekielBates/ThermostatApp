@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/currentTemp"
+        android:layout_width="153dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="308dp"
+        android:layout_marginEnd="129dp"
+        android:layout_marginBottom="309dp"
+        android:gravity="center"
+        android:text="@string/currentTemp"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/setTemp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="316dp"
+        android:layout_marginTop="336dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="337dp"
+        android:gravity="center"
+        android:text="@string/setTemp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/increase"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="255dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="100dp"
+        android:text="@string/upButton"
+        app:layout_constraintBottom_toTopOf="@+id/setTemp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/currentTemp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/decrease"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="256dp"
+        android:text="@string/downButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/currentTemp"
+        app:layout_constraintTop_toBottomOf="@+id/setTemp" />
+
+    <LinearLayout
+        android:layout_width="411dp"
+        android:layout_height="51dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ToggleButton
+            android:id="@+id/toggleButton4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="ToggleButton"
+            android:textOff="COOL"
+            android:textOn="HEAT" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ToggleButton"
+            android:textOff="OFF"
+            android:textOn="ON" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

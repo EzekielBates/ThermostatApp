@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ThermostatApp</string>
+    <string name="upButton">UP</string>
+    <string name="downButton">DOWN</string>
+    <string name="setTemp">73</string>
+    <string name="currentTemp">6969</string>
+</resources>
