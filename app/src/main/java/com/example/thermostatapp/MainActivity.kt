@@ -1,17 +1,19 @@
 package com.example.thermostatapp
 
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.springframework.http.converter.StringHttpMessageConverter
 import org.springframework.web.client.RestTemplate
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +38,10 @@ class MainActivity : AppCompatActivity() {
 
 
         val t = GetData()
-        t.launchDataLoad("http://192.168.1.66:8000/thermostat/thermostatsettings/get/1",temperatureInfo,setTemp,currentTemp,power,cool)
+        t.launchDataLoad("http://192.168.1.66:8000/thermostat/thermostatsettings/get/1",temperatureInfo,setTemp,currentTemp)
+
+        power.isChecked = temperatureInfo.onoroff
+        cool.isChecked = !temperatureInfo.hotorcold
 
         increase = findViewById(R.id.increase)
         increase.setOnClickListener{
@@ -74,9 +79,6 @@ class MainActivity : AppCompatActivity() {
                 updateSetCool(true,temperatureInfo)
             }
         }
-
-
-
     }
 
     private fun updateSetCool(horc : Boolean,temperatureInfo: TemperatureData){
@@ -111,11 +113,11 @@ class MainActivity : AppCompatActivity() {
                 var oof = "True"
                 var horc = "True"
 
-                if(tempInfo.onoroff == false){
+                if(!tempInfo.onoroff){
                     oof = "False"
                 }
 
-                if(tempInfo.hotorcold == false){
+                if(!tempInfo.hotorcold){
                     horc = "False"
                 }
 
@@ -132,10 +134,10 @@ class MainActivity : AppCompatActivity() {
         private val completableJob = Job()
         private val coroutineScope = CoroutineScope(Dispatchers.IO + completableJob)
 
-        fun launchDataLoad(url:String,temperatureInfo: TemperatureData,setTemp: TextView,currentTemp: TextView,power:ToggleButton,cool:ToggleButton){
+        fun launchDataLoad(url:String,temperatureInfo: TemperatureData,setTemp: TextView,currentTemp: TextView){
             coroutineScope.launch {
                 request(url,temperatureInfo)
-                update(setTemp,currentTemp,temperatureInfo,power,cool)
+                update(setTemp,currentTemp,temperatureInfo)
             }
         }
 
@@ -145,12 +147,9 @@ class MainActivity : AppCompatActivity() {
             completableJob.cancel()
         }
 
-        private fun update(setTemp:TextView, currentTemp:TextView, temperatureInfo: TemperatureData, power: ToggleButton, cool: ToggleButton){
+        private fun update(setTemp:TextView, currentTemp:TextView, temperatureInfo: TemperatureData){
             setTemp.text = temperatureInfo.temperature.toString()
             currentTemp.text = temperatureInfo.housetemp.toString()
-            //power.isPressed = temperatureInfo.onoroff
-            //cool.isPressed = temperatureInfo.hotorcold
-
         }
 
         private fun request(url: String, temperatureInfo: TemperatureData?){
