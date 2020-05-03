@@ -1,7 +1,6 @@
 package com.example.thermostatapp
 
 import android.os.Bundle
-import android.os.Handler
 import android.widget.Button
 import android.widget.TextView
 import android.widget.ToggleButton
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         currentTemp = findViewById(R.id.currentTemp)
         power = findViewById(R.id.toggleButton6)
         cool = findViewById(R.id.toggleButton4)
-
 
         val t = GetData()
         t.launchDataLoad("http://192.168.1.66:8000/thermostat/thermostatsettings/get/1",temperatureInfo,setTemp,currentTemp)
