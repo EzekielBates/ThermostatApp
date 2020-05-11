@@ -78,19 +78,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    //updates the hot/cold setting on the server
     private fun updateSetCool(horc : Boolean,temperatureInfo: TemperatureData){
         val s = SetData()
         temperatureInfo.hotorcold = horc
         s.launchDataLoad(temperatureInfo)
     }
-
+    //updates the on/off setting on the server
     private fun updateSetPower(onoroff : Boolean,temperatureInfo: TemperatureData){
         val s = SetData()
         temperatureInfo.onoroff = onoroff
         s.launchDataLoad(temperatureInfo)
     }
-
+    //update the temperature setting on the server.
     private fun updateSetTemp(textView: TextView, temperatureInfo: TemperatureData){
         val s = SetData()
         textView.text = temperatureInfo.temperature.toString()
@@ -98,6 +98,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /*
+    Uses coroutines and spring to update the server with new information from the app.
+     */
     class SetData : ViewModel (){
 
         private val completableJob = Job()
@@ -119,14 +122,17 @@ class MainActivity : AppCompatActivity() {
                     horc = "False"
                 }
 
-
+                //urls string to update data on the server.
                 val url = "http://192.168.1.66:8000/thermostat/thermostatsettings/set/1?temp=" + tempInfo.temperature.toString() + "&horc=" + horc + "&oof=" + oof + "&htemp=" + tempInfo.housetemp.toString()
+
                 restTemplate.getForObject(url, String::class.java, "Android")
 
             }
         }
     }
-
+    /*
+    Uses couroutines and spring to pull data from the server.
+     */
     class GetData : ViewModel() {
 
         private val completableJob = Job()
@@ -144,7 +150,7 @@ class MainActivity : AppCompatActivity() {
             //Canceling a job when the ViewModel is being finished .
             completableJob.cancel()
         }
-
+        //updates the temperatures text on the app
         private fun update(setTemp:TextView, currentTemp:TextView, temperatureInfo: TemperatureData){
             setTemp.text = temperatureInfo.temperature.toString()
             currentTemp.text = temperatureInfo.housetemp.toString()
@@ -152,17 +158,15 @@ class MainActivity : AppCompatActivity() {
 
         private fun request(url: String, temperatureInfo: TemperatureData?){
             // Create a new RestTemplate instance
-            // Create a new RestTemplate instance
             val restTemplate = RestTemplate()
 
-            // Add the String message converter
             // Add the String message converter
             restTemplate.messageConverters.add(StringHttpMessageConverter())
 
             // Make the HTTP GET request, marshaling the response to a String
-            // Make the HTTP GET request, marshaling the response to a String
             val result =
                 restTemplate.getForObject(url, String::class.java, "Android")
+            //Loads the data from the website into the TemperatureData class
             val json = Gson().fromJson(result,TemperatureData::class.java)
             temperatureInfo?.temperature = json.temperature
             temperatureInfo?.hotorcold = json.hotorcold
