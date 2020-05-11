@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         cool = findViewById(R.id.toggleButton4)
 
         val t = GetData()
-        t.launchDataLoad("http://192.168.1.66:8000/thermostat/thermostatsettings/get/1",temperatureInfo,setTemp,currentTemp)
+        t.launchDataLoad("http://ztthermostat.tech:5000/thermostat/thermostatsettings/get/1",temperatureInfo,setTemp,currentTemp)
 
         power.isChecked = temperatureInfo.onoroff
         cool.isChecked = !temperatureInfo.hotorcold
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 //urls string to update data on the server.
-                val url = "http://192.168.1.66:8000/thermostat/thermostatsettings/set/1?temp=" + tempInfo.temperature.toString() + "&horc=" + horc + "&oof=" + oof + "&htemp=" + tempInfo.housetemp.toString()
+                val url = "http://ztthermostat.tech:5000/thermostat/thermostatsettings/set/1?temp=" + tempInfo.temperature.toString() + "&horc=" + horc + "&oof=" + oof + "&htemp=" + tempInfo.housetemp.toString()
 
                 restTemplate.getForObject(url, String::class.java, "Android")
 
